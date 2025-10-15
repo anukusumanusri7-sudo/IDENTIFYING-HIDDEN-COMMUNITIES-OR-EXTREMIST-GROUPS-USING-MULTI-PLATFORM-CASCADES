@@ -1,0 +1,26 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hidden Communities Detection</title>
+</head>
+<body>
+    <h1>Hidden Communities / Extremist Groups Detection</h1>
+    <button onclick="fetchCommunities()">Detect Communities</button>
+    <div id="results"></div>
+
+    <script>
+        async function fetchCommunities() {
+            const response = await fetch('http://127.0.0.1:5000/detect');
+            const data = await response.json();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            data.forEach(comm => {
+                const div = document.createElement('div');
+                div.innerHTML = `<b>Community ${comm.community_id}:</b> ${comm.members.join(', ')}`;
+                resultsDiv.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
